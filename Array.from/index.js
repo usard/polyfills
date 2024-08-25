@@ -16,16 +16,22 @@
 // let s = new Set([1,2,3])
 // console.log(Object.prototype.toString.call(s)) // tp get the typeof s
 
-Array.myfrom = function (arrayLike) {
+Array.myfrom = function (arrayLike , mapFn) {
     let arr= []
     for (let ele of arrayLike){
-       arr.push(ele)
+        if (mapFn) {
+            arr.push(mapFn(ele))
+        }
+        else {
+            arr.push(ele)
+        }
     }
     return arr
 }
 
-console.log(Array.myfrom(new Set([1,2])))
+console.log( Array.myfrom( new Set([1,2]), (x)=> x*2 ) )
+console.log(Array.from(new Set([1,2]), (x)=> x*2))
 
-console.log(Array.myfrom(new Map([[1,2], [3,4]])))
 
-// console.log(Array.from(new Map( [[1,2], [3,4]] ) ) ) // inside array of a map each element should be a object type
+console.log(Array.myfrom(new Map([[1,2], [3,4]]), (x)=> x*2))
+console.log(Array.from(new Map( [[1,2], [3,4]] ), (x)=> x*2 ) ) // inside array of a map each element should be a object type
